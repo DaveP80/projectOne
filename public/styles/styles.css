@@ -1,0 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Nokora:wght@300&display=swap');
+@import url('~simpledotcss/simple.min.css');
+
+body {
+    font-family: 'Nokora', sans-serif;
+}
