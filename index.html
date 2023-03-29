@@ -1,42 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-    <script defer src="index.js"></script>
+    <script defer src="./public/script.js"></script>
     <title>✍️ Motivational</title>
 </head>
+
 <body>
+
     <body>
         <div class="container">
-          <h1>Copy text/image to Clipboard</h1>
-          <p>
-            This page serves as an example for the article
-            <a href="https://dev.to/viclafouch/the-new-way-to-copy-an-image-or-a-text-to-clipboard-in-javascript-41ol">The New Way to Copy an Image or a Text to Clipboard in Javascript</a>
-            which introduces the Asynchronous Clipboard API which can handle some images in addition to text.
-          </p>
-          <div class="wrapper-block-copy">
-            <div class="block-copy">
-              <textarea placeholder="Your text here...">Hello World</textarea>
+            <h1>Copy text/image to Clipboard</h1>
+            <p>
+                This page serves as an example for the article
+                <a
+                    href="https://dev.to/viclafouch/the-new-way-to-copy-an-image-or-a-text-to-clipboard-in-javascript-41ol">The
+                    New Way to Copy an Image or a Text to Clipboard in Javascript</a>
+                which introduces the Asynchronous Clipboard API which can handle some images in addition to text.
+            </p>
+            <div class="wrapper-block-copy">
+                <div class="block-copy">
+                    <textarea placeholder="Your text here...">Hello World</textarea>
+                </div>
+                <div class="block-copy">
+                    <img id='centerimg' src="./assets/github.png">
+                </div>
             </div>
-            <div class="block-copy">
-              <img src="./assets/github.png">
+            <div class="wrapper-btn-copy">
+                <button id="copy-text-btn">Copy text to clipboard</button>
+                <button id="copy-img-btn">Copy image to clipboard</button>
             </div>
-          </div>
-          <div class="wrapper-btn-copy">
-            <button id="copy-text-btn">Copy text to clipboard</button>
-            <button id="copy-img-btn">Copy image to clipboard</button>
-          </div>
-          <div class="status">
-            <p>Can write ? <span id="can-write" style="color: green;">true</span></p>
-            <p id="errorMsg"></p>
-          </div>
-          <div contenteditable="true" class="content-result"></div>
+            <div class="status">
+                <p>Can write ? <span id="can-write" style="color: green;">true</span></p>
+                <p id="errorMsg"></p>
+            </div>
+            <div contenteditable="true" class="content-result"></div>
         </div>
         <footer>
-          By&nbsp;
+            By&nbsp;
         </footer>
-</body>
+    </body>
+
 </html>
