@@ -22,6 +22,13 @@
                     New Way to Copy an Image or a Text to Clipboard in Javascript</a>
                 which introduces the Asynchronous Clipboard API which can handle some images in addition to text.
             </p>
+            <section class="validation">
+                <form id="myForm">
+                    <label for="inputText">Enter your key:</label>
+                    <input placeholder="from rapidAPI" type="text" id="inputText">
+                    <input type="submit" value="Submit"></button>
+                </form>
+            </section>
             <section class="centered">
                 <form class="usersubmit">
                     <select id="category">
@@ -72,11 +79,6 @@
             <div class="wrapper-btn-copy">
                 <button id="copy-text-btn2">Copy text to clipboard</button>
             </div>
-            <div class="status">
-                <p>Can write ? <span id="can-write" style="color: green;">true</span></p>
-                <p id="errorMsg"></p>
-            </div>
-            <div contenteditable="true" class="content-result"></div>
         </div>
         <canvas id="myCanvas" style="border:1px solid #DDF4D5; border-radius: 0.3em; background-color: #c9fcb8"></canvas>
         <div class="wrapper-btn-copy">
