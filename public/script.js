@@ -1,5 +1,7 @@
 let textareastorage = {}
 let counter = 0;
+//access
+
 //store client dimensions
 let canvasdim = document.getElementById('myCanvas')
 const defaultWidth = canvasdim.width;
@@ -70,7 +72,7 @@ function checkString(args) {
   return [shortest, longest];
 }
 
-async function getQuote(api_url, headers, flag) {
+async function fetchApiData(api_url, flag) {
   if (flag == "search") {
     const myElement = document.querySelector('.centered');
     const newp = document.createElement('p')
@@ -78,11 +80,36 @@ async function getQuote(api_url, headers, flag) {
     newp.textContent = '...loading'
     if (myElement) myElement.appendChild(newp)
   }
-  const response = await fetch(api_url, headers);
-
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch('https://us-east4-projectone-382214.cloudfunctions.net/project-one');
+    const apiKey = await response.text(); // get API key from response
+    const apiResponse = await fetch(api_url, {method: 'GET',
+    headers: {
+    'X-RapidAPI-Key': apiKey,
+    'X-RapidAPI-Host': 'quotes-villa.p.rapidapi.com'
+    } 
+    }); // make another API call using API key
+    const data = await apiResponse.json(); // parse response as JSON
+    return data
+    // do something with data
+  } catch (error) {
+    console.error('Error fetching API:', error);
+  }
 }
+
+// async function getQuote(api_url, headers, flag) {
+//   if (flag == "search") {
+//     const myElement = document.querySelector('.centered');
+//     const newp = document.createElement('p')
+//     newp.id = 'loadingtext'
+//     newp.textContent = '...loading'
+//     if (myElement) myElement.appendChild(newp)
+//   }
+//   const response = await fetch(api_url, headers);
+
+//   const data = await response.json();
+//   return data;
+// }
 
 const form = document.querySelector('.usersubmit');
 
@@ -94,15 +121,15 @@ form.addEventListener("submit", (event) => {
   let clearbox = document.getElementById('centertext')
   clearbox.value = ''
 
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': '04a630e781mshefd694339487a87p171cc9jsn6bd43ac41939',
-      'X-RapidAPI-Host': 'quotes-villa.p.rapidapi.com'
-    }
-  };
+  // const options = {
+  //   method: 'GET',
+  //   headers: {
+  //     'X-RapidAPI-Key': ak,
+  //     'X-RapidAPI-Host': 'quotes-villa.p.rapidapi.com'
+  //   }
+  // };
 
-  getQuote(`https://quotes-villa.p.rapidapi.com/quotes/${category}`, options, "search")
+  fetchApiData(`https://quotes-villa.p.rapidapi.com/quotes/${category}`, "search")
     .then(data => {
       let deltext = document.getElementById('loadingtext')
       deltext.remove()
