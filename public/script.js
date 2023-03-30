@@ -80,7 +80,6 @@ function checkString(args) {
   let shortest = cache[0]; // assume the first string is the shortest
   // loop through the array of strings and compare lengths
   for (let i = 1; i < cache.length; i++) {
-    console.log(cache[i]);
     if (cache[i].length < shortest.length) {
       shortest = cache[i];
     }
@@ -88,7 +87,6 @@ function checkString(args) {
   let longest = cache[0]; // assume the first string is the shortest
   // loop through the array of strings and compare lengths
   for (let i = 1; i < cache.length; i++) {
-    console.log(cache[i]);
     if (cache[i].length > longest.length) {
       longest = cache[i];
     }
@@ -104,36 +102,11 @@ async function getQuote(api_url, headers, flag) {
     newp.textContent = '...loading'
     if (myElement) myElement.appendChild(newp)
   }
-  try {
-    const response = await fetch('https://us-east4-projectone-382214.cloudfunctions.net/project-one');
-    const apiKey = await response.text(); // get API key from response
-    const apiResponse = await fetch(api_url, {method: 'GET',
-    headers: {
-    'X-RapidAPI-Key': apiKey,
-    'X-RapidAPI-Host': 'quotes-villa.p.rapidapi.com'
-    } 
-    }); // make another API call using API key
-    const data = await apiResponse.json(); // parse response as JSON
-    return data
-    // do something with data
-  } catch (error) {
-    console.error('Error fetching API:', error);
-  }
+  const response = await fetch(api_url, headers);
+
+  const data = await response.json();
+  return data;
 }
-
-// async function getQuote(api_url, headers, flag) {
-//   if (flag == "search") {
-//     const myElement = document.querySelector('.centered');
-//     const newp = document.createElement('p')
-//     newp.id = 'loadingtext'
-//     newp.textContent = '...loading'
-//     if (myElement) myElement.appendChild(newp)
-//   }
-//   const response = await fetch(api_url, headers);
-
-//   const data = await response.json();
-//   return data;
-// }
 
 const form = document.querySelector('.usersubmit');
 
@@ -154,7 +127,7 @@ form.addEventListener("submit", (event) => {
     }
   };
 
-  fetchApiData(`https://quotes-villa.p.rapidapi.com/quotes/${category}`, "search")
+  getQuote(`https://quotes-villa.p.rapidapi.com/quotes/${category}`, options, "search")
     .then(data => {
       if (data=='invalid key') return;
       let deltext = document.getElementById('loadingtext')
