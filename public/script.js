@@ -122,7 +122,6 @@ form.addEventListener("submit", (event) => {
     method: 'GET',
     headers: {
       'X-RapidAPI-Key': localStorage.getItem("key"),
-      'X-RapidAPI-Key': '04a630e781mshefd694339487a87p171cc9jsn6bd43ac41939',
       'X-RapidAPI-Host': 'quotes-villa.p.rapidapi.com'
     }
   };
