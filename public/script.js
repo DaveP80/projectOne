@@ -9,6 +9,8 @@ const textarea = document.getElementById('centertext');
 const defaultTWidth = textarea.clientWidth;
 const defaultTHeight = textarea.clientHeight;
 
+localStorage.setItem("key", "04a630e781mshefd694339487a87p171cc9jsn6bd43ac41939");
+
 let textb = document.getElementById('copy-text-btn')
 
 textb.addEventListener('click', () => {
@@ -35,6 +37,28 @@ textc.addEventListener('click', () => {
     alert("need more content in text area")
   }
 })
+
+// var inputValue = "";
+
+// window.onload = function() {
+//   // Get the form element
+//   var myForm = document.getElementById("myForm");
+
+//   // Add a submit event listener to the form
+//   myForm.addEventListener("submit", function(event) {
+//     // Prevent the default form submission behavior
+//     event.preventDefault();
+
+//     // Get the input value
+//     inputValue = document.getElementById("inputText").value;
+
+//     // Do something with the input value, for example display it
+//     alert("Input value: " + inputValue);
+
+//     // Clear the input field
+//     document.getElementById("inputText").value = "";
+//   });
+// };
 
 function addString(str) {
   const key = `${counter}`;
@@ -71,6 +95,9 @@ function checkString(args) {
 }
 
 async function getQuote(api_url, headers, flag) {
+  // if (inputValue.length !== 50) {
+  //   return 'invalid key'
+  // }
   if (flag == "search") {
     const myElement = document.querySelector('.centered');
     const newp = document.createElement('p')
@@ -97,6 +124,7 @@ form.addEventListener("submit", (event) => {
   const options = {
     method: 'GET',
     headers: {
+      'X-RapidAPI-Key': localStorage.getItem("key"),
       'X-RapidAPI-Key': '04a630e781mshefd694339487a87p171cc9jsn6bd43ac41939',
       'X-RapidAPI-Host': 'quotes-villa.p.rapidapi.com'
     }
@@ -104,6 +132,7 @@ form.addEventListener("submit", (event) => {
 
   getQuote(`https://quotes-villa.p.rapidapi.com/quotes/${category}`, options, "search")
     .then(data => {
+      if (data=='invalid key') return;
       let deltext = document.getElementById('loadingtext')
       deltext.remove()
 
