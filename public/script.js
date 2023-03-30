@@ -109,6 +109,7 @@ form.addEventListener("submit", (event) => {
 
         let contentstring = checkString(data)
         let newarr = []
+        //remove extra char at end of previous function
         for (let s of contentstring) {
           if (s.charAt(s.length - 1) === ',') {
             s = s.slice(0, -1);
@@ -129,6 +130,7 @@ form.addEventListener("submit", (event) => {
           let checktextarea = document.getElementById('centertext')
           if (checktextarea.value.length<10){
             let resetcanvas = document.getElementById('myCanvas')
+            //reset canvas and textarea dimensions
             resetcanvas.width = defaultWidth
             resetcanvas.height = defaultHeight
             checktextarea.style.width = (defaultTWidth).toString() + 'px'
