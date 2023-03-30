@@ -1,5 +1,8 @@
 let textareastorage = {}
 let counter = 0;
+let canvasdim = document.getElementById('myCanvas')
+const defaultWidth = canvasdim.width;
+const defaultHeight = canvasdim.height;
 
 function addString(str) {
   const key = `${counter}`;
@@ -43,15 +46,23 @@ form.addEventListener("submit", (event) => {
       .then(data => {
         let deltext = document.getElementById('loadingtext')
         deltext.remove()
+        const keys = Object.keys(data);
+        const randomIndex = Math.floor(Math.random() * keys.length);
+        const randomKey = keys[randomIndex];
+        
         let changearea = document.getElementById('centertext')
-        changearea.value = Object.values(data[3]).join('').trim().replaceAll("  ", "")
-        addString(Object.values(data[3]).join('').trim().replaceAll("  ", ""))
-        console.log(counter);
+        changearea.value = Object.values(data[randomKey]).join('').trim().replaceAll("  ", "")
+        addString(Object.values(data[randomKey]).join('').trim().replaceAll("  ", ""))
         makeCanvas()
         //Generate new canvas when textarea is altered.
         changearea.addEventListener("input", () => {
           let checktextarea = document.getElementById('centertext')
-          if (checktextarea.value.length > textareastorage[counter-1].length+8 || checktextarea.value.length < 
+          if (checktextarea.value.length<10){
+            let resetcanvas = document.getElementById('myCanvas')
+            resetcanvas.width = defaultWidth
+            resetcanvas.height = defaultHeight
+          }
+          else if (checktextarea.value.length > textareastorage[counter-1].length+8 || checktextarea.value.length < 
             textareastorage[counter-1].length-8) {
             makeCanvas()
           }
