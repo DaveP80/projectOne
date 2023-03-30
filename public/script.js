@@ -1,13 +1,73 @@
 let textareastorage = {}
 let counter = 0;
+//store client dimensions
 let canvasdim = document.getElementById('myCanvas')
 const defaultWidth = canvasdim.width;
 const defaultHeight = canvasdim.height;
+//store client dimensions
+const textarea = document.getElementById('centertext');
+const defaultTWidth = textarea.clientWidth;
+const defaultTHeight = textarea.clientHeight;
+
+let textb = document.getElementById('copy-text-btn')
+
+textb.addEventListener('click', () => {
+  let divContent = document.getElementById('centertext')
+  if (divContent.value.length>1) {
+    divContent.select();
+
+    // Copy the text
+    document.execCommand('copy');
+  } else {
+    alert("need more content in text area")
+  }
+  })
+let textc = document.getElementById('copy-text-btn2')
+
+textc.addEventListener('click', () => {
+  let divContent = document.getElementById('centertext2')
+  if (divContent.value.length>1) {
+    divContent.select();
+
+    // Copy the text
+    document.execCommand('copy');
+  } else {
+    alert("need more content in text area")
+  }
+  })
 
 function addString(str) {
   const key = `${counter}`;
   textareastorage[key] = str;
   counter++;
+}
+
+function checkString(args) {
+  let cache = []
+  const keys = Object.keys(args);
+  for (let i=0; i<12; i++) {
+    const randomIndex = Math.floor(Math.random() * keys.length);
+    const randomKey = keys[randomIndex];
+    cache.push(Object.values(args[randomKey]).join('').trim().replaceAll("  ", ''))
+
+  }
+    let shortest = cache[0]; // assume the first string is the shortest
+    // loop through the array of strings and compare lengths
+    for (let i = 1; i < cache.length; i++) {
+      console.log(cache[i]);
+      if (cache[i].length < shortest.length) {
+        shortest = cache[i];
+      }
+    }
+    let longest = cache[0]; // assume the first string is the shortest
+    // loop through the array of strings and compare lengths
+    for (let i = 1; i < cache.length; i++) {
+      console.log(cache[i]);
+      if (cache[i].length > longest.length) {
+        longest = cache[i];
+      }
+    }
+    return [shortest, longest]; 
 }
 
 async function getQuote(api_url, headers, flag) {
@@ -46,13 +106,23 @@ form.addEventListener("submit", (event) => {
       .then(data => {
         let deltext = document.getElementById('loadingtext')
         deltext.remove()
-        const keys = Object.keys(data);
-        const randomIndex = Math.floor(Math.random() * keys.length);
-        const randomKey = keys[randomIndex];
+
+        let contentstring = checkString(data)
+        let newarr = []
+        for (let s of contentstring) {
+          if (s.charAt(s.length - 1) === ',') {
+            s = s.slice(0, -1);
+            newarr.push(s)
+          } else newarr.push(s)
+        }
+
         
         let changearea = document.getElementById('centertext')
-        changearea.value = Object.values(data[randomKey]).join('').trim().replaceAll("  ", "")
-        addString(Object.values(data[randomKey]).join('').trim().replaceAll("  ", ""))
+        let changearea2 = document.getElementById('centertext2')
+        //fill in the two text areas with shortest and longest result strings
+        changearea.value = newarr[0]
+        changearea2.value = newarr[1]
+        addString(newarr[0])
         makeCanvas()
         //Generate new canvas when textarea is altered.
         changearea.addEventListener("input", () => {
@@ -61,22 +131,14 @@ form.addEventListener("submit", (event) => {
             let resetcanvas = document.getElementById('myCanvas')
             resetcanvas.width = defaultWidth
             resetcanvas.height = defaultHeight
+            checktextarea.style.width = (defaultTWidth).toString() + 'px'
+            checktextarea.style.height = (defaultTHeight).toString() + 'px'
           }
           else if (checktextarea.value.length > textareastorage[counter-1].length+8 || checktextarea.value.length < 
             textareastorage[counter-1].length-8) {
             makeCanvas()
           }
         })
-        let textb = document.getElementById('copy-text-btn')
-
-        textb.addEventListener('click', () => {
-          let divContent = document.getElementById('centertext')
-
-          divContent.select();
-
-          // Copy the text
-          document.execCommand('copy');
-          })
               })
               .catch(error => console.error(error));
       })
@@ -110,13 +172,14 @@ canvas.style = "background-color: #c9fcb8";
 const ctx = canvas.getContext('2d');
 
 // Set the font properties
-const fontSize = 16;
+const fontSize = 20;
 ctx.font = `${fontSize}px Arial`;
 
 // Set the canvas size to match the text size
 const textWidth = ctx.measureText(pElement.value).width;
 canvas.width = textWidth*0.80;
 canvas.height = fontSize * 3;
+canvas.style.borderRadius = '0.3em'
 
 // Center the text
 const x = canvas.width / 2;
@@ -166,8 +229,7 @@ newCanvas.toBlob((blob) => {
   
 });
 })
-}
-        
+}       
 
 
 
