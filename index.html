@@ -59,16 +59,13 @@
 
                 
                 <div class="block-copy">
-                    <!-- <textarea id='centertext' style="width: 40vw;" placeholder="Your text here..."></textarea> -->
-                    <p id="centertext">...get a new quote</p>
-                </div>
-                <div class="block-copy">
-                    <img id='centerimg' src="./assets/github.png">
+                    <textarea id='centertext' style="width: 40vw;" placeholder="Your text here..."></textarea>
+                    <!-- <p id="centertext">...get a new quote</p> -->
                 </div>
             </div>
             <div class="wrapper-btn-copy">
                 <button id="copy-text-btn">Copy text to clipboard</button>
-                <button id="copy-img-btn">Copy image to clipboard</button>
+                <button id="makecanvas-btn">Make new Canvas</button>
             </div>
             <div class="status">
                 <p>Can write ? <span id="can-write" style="color: green;">true</span></p>
@@ -76,7 +73,7 @@
             </div>
             <div contenteditable="true" class="content-result"></div>
         </div>
-        <canvas id="myCanvas" style="border:1px solid #DDF4D5; background-color: #DDF4D5"></canvas>
+        <canvas id="myCanvas" style="border:1px solid #DDF4D5; border-radius: 0.3em; background-color: #c9fcb8"></canvas>
         <div class="wrapper-btn-copy">
             <button id="copy-canvas-btn">Copy canvas to clipboard</button>
         </div>
