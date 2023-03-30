@@ -1,7 +1,5 @@
 let textareastorage = {}
 let counter = 0;
-//access
-
 //store client dimensions
 let canvasdim = document.getElementById('myCanvas')
 const defaultWidth = canvasdim.width;
@@ -12,6 +10,9 @@ const defaultTWidth = textarea.clientWidth;
 const defaultTHeight = textarea.clientHeight;
 
 localStorage.setItem("key", "04a630e781mshefd694339487a87p171cc9jsn6bd43ac41939");
+window.onload = function() {
+  var defaultFont = document.body.style.fontFamily;
+};
 
 let textb = document.getElementById('copy-text-btn')
 
@@ -39,28 +40,6 @@ textc.addEventListener('click', () => {
     alert("need more content in text area")
   }
 })
-
-// var inputValue = "";
-
-// window.onload = function() {
-//   // Get the form element
-//   var myForm = document.getElementById("myForm");
-
-//   // Add a submit event listener to the form
-//   myForm.addEventListener("submit", function(event) {
-//     // Prevent the default form submission behavior
-//     event.preventDefault();
-
-//     // Get the input value
-//     inputValue = document.getElementById("inputText").value;
-
-//     // Do something with the input value, for example display it
-//     alert("Input value: " + inputValue);
-
-//     // Clear the input field
-//     document.getElementById("inputText").value = "";
-//   });
-// };
 
 function addString(str) {
   const key = `${counter}`;
@@ -115,8 +94,14 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const category = form.elements.category.value;
+  var font = form.elements.fonts.value;
   let clearbox = document.getElementById('centertext')
   clearbox.value = ''
+  if (font == '--Font--') font = "'Nokora', sans-serif";
+  clearbox.style.fontFamily = font;
+  let clearbox2 = document.getElementById('centertext2')
+  clearbox2.value = ''
+  clearbox2.style.fontFamily = font;
 
   const options = {
     method: 'GET',
@@ -128,7 +113,6 @@ form.addEventListener("submit", (event) => {
 
   getQuote(`https://quotes-villa.p.rapidapi.com/quotes/${category}`, options, "search")
     .then(data => {
-      if (data=='invalid key') return;
       let deltext = document.getElementById('loadingtext')
       deltext.remove()
 
@@ -141,11 +125,15 @@ form.addEventListener("submit", (event) => {
           newarr.push(s)
         } else newarr.push(s)
       }
-
-
       let changearea = document.getElementById('centertext')
       let changearea2 = document.getElementById('centertext2')
       //fill in the two text areas with shortest and longest result strings
+      if (!newarr[0].includes("You are not subscribed to this API.")) {
+        newarr.forEach(item => {
+          localStorage.setItem(Math.floor(10000 + Math.random() * 90000).toString(), item)
+        })
+        
+      } else return;
       changearea.value = newarr[0]
       changearea2.value = newarr[1]
       addString(newarr[0])
@@ -161,6 +149,7 @@ form.addEventListener("submit", (event) => {
           checktextarea.style.width = (defaultTWidth).toString() + 'px'
           checktextarea.style.height = (defaultTHeight).toString() + 'px'
         }
+        //only alter canvas if there is a quantitative difference in text area
         else if (checktextarea.value.length > textareastorage[counter - 1].length + 8 || checktextarea.value.length <
           textareastorage[counter - 1].length - 8) {
           makeCanvas()
