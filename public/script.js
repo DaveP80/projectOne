@@ -270,19 +270,14 @@ function copyTextArea() {
     newCanvas.width = canvas.width;
     newCanvas.height = canvas.height;
 
-    // Get the new canvas context
     const newCtx = newCanvas.getContext('2d');
 
-    // Copy the contents of the original canvas to the new canvas
     newCtx.drawImage(canvas, 0, 0);
 
-    // Convert the canvas content to a data URL
     newCanvas.toBlob((blob) => {
 
-      // Create a new image element
       const img = new Image();
 
-      // Set the image source to the Blob URL
       img.src = URL.createObjectURL(blob);
 
       copyToClipboard(img.src)

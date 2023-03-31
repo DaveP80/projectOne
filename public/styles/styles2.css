@@ -4,7 +4,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dokdo&display=swap');
-
 body {
     font-family: 'Taprom', cursive;
     margin: 0;
@@ -51,4 +50,21 @@ header {
     background-color: #e6d7a0;
     padding: 0.6em;
     border-radius: 0.5em;
+  }
+  
+  #myBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 0.6em; /* Place the button at the bottom of the page */
+    right: 0.7em; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 0.2em; /* Some padding */
+    border-radius: 0.4em; /* Rounded corners */
+    font-size: 1em; /* Increase font size */
+  }
+
+  #myBtn:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
   }
