@@ -1,10 +1,10 @@
+//make an array of important objects from
 const filteredValues = Object.entries(localStorage)
     .filter(([key, value]) => parseInt(key) > 9999)
-    .map(([key, value]) => value)
-
+    .map(([key, value]) => {return {[key]: value}})
 let column = 1;
-//if there are no quotes in local storage
-if (filteredValues.length == 0) {
+//if local storage is empty
+function emptyStorage() {
     ['make some API Requests!', '📓📙👩‍🎓', '🦮🐱🐩'].forEach(item => {
         const newItem = document.createElement('div');
         let newp = document.createElement('p')
@@ -20,17 +20,32 @@ if (filteredValues.length == 0) {
         }
     })
 }
+
+//if there are no quotes in local storage
+if (filteredValues.length == 0) {
+    emptyStorage()
+}
 //fill the columns of our grid with text boxes
-for (const str of filteredValues) {
+for (let obj of filteredValues) {
+    console.log(obj)
     const newItem = document.createElement('div');
-    newItem.id = Math.floor(100 + Math.random() * 900).toString()
+    newItem.id = Object.keys(obj)[0]
     let newp = document.createElement('p')
-    newp.textContent = str.replaceAll("\n", ' ');
+    //newp.textContent = obj.replaceAll("\n", ' ');
+    newp.textContent = Object.values(obj)[0].replaceAll('\n', ' ')
     let newicon = document.createElement('i')
     newicon.classList.add("fa", "fa-times")
     newicon.addEventListener('click', () => {
         let myDiv = document.getElementById(newItem.id)
         myDiv.remove()
+        localStorage.removeItem(newItem.id)
+        //build center if all divs are empty
+        const div1 = document.getElementById("1");
+        const div2 = document.getElementById("2");
+        const div3 = document.getElementById("3");
+        if (div1.innerHTML === "" && div2.innerHTML === "" && div3.innerHTML === "") {
+            emptyStorage()
+          }
     })
     newItem.classList.add('pitem');
     newItem.style.gridColumn = `${column} / span 1`; // Set the column of the new item
@@ -57,7 +72,7 @@ form.addEventListener('submit', (event) => {
 })
 
 document.getElementById("nav").addEventListener("click", function () {
-    window.history.back();
+    window.location.href = '../index.html'
 });
 //change grid layout of all the collected quotes
 document.getElementById("revert").addEventListener("click", function () {

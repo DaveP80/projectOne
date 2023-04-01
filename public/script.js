@@ -138,6 +138,7 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const category = form.elements.category.value;
+  if (category=='--select a category--') alert('choosing wisdom')
   var font = form.elements.fonts.value;
   let clearbox = document.getElementById('centertext')
   clearbox.value = ''
@@ -227,7 +228,7 @@ function makeCanvas(args) {
 
   // Select the p element from the DOM
   const pElement = document.getElementById("centertext");
-  //canvas.style = "background-color: #c9fcb8";
+
   canvas.style = `background-color: ${args == '--Color--' ? '#c9fcb8' : args}`;
 
   const ctx = canvas.getContext('2d');
