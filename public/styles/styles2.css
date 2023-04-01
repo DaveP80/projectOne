@@ -7,11 +7,10 @@
 
 body {
     font-family: 'Taprom', cursive;
-    margin: 0 auto;
-    padding: 0;
     display: grid;
     grid-template-rows: auto 1fr;
     grid-template-columns: auto 90% auto;
+    background-image: linear-gradient(to right top, #051937, #44445e, #7b7588, #b2acb6, #e8e7e8);
 }
 
 header {
@@ -73,4 +72,16 @@ i:hover {
 
 #myBtn:hover {
     background-color: #555;
+}
+
+@media only screen and (max-width: 720px) {
+    #fonts {
+        width: 75%;
+    }
+}
+
+@media only screen and (max-width: 386px) {
+    #fonts {
+        width: 95%;
+    }
 }

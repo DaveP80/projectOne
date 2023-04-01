@@ -24,6 +24,28 @@ textb.addEventListener('click', () => {
   }
 })
 
+let info = document.getElementById('info')
+
+info.addEventListener('click', () => {
+  let newdiv = document.createElement('div')
+  newdiv.id = 'infodiv'
+  let notice = document.createElement('p')
+  notice.classList.add('notice')
+  notice.textContent = `This website calls the QuotesVilla Api and the user can select from many categories. Pick
+   a category and font color. Then you can copy and paste and short or long quote and make a canvas with text. The
+    other page is a collection of all the Api requests.`
+  newdiv.appendChild(notice)
+  let newicon = document.createElement('i')
+  newicon.classList.add("fa", "fa-times")
+  newicon.addEventListener('click', () => {
+      let myDiv = document.getElementById(newdiv.id)
+      myDiv.remove()
+  })
+  newdiv.appendChild(newicon)
+  let adddiv = document.querySelector('header')
+  adddiv.appendChild(newdiv)
+})
+
 let reset = document.getElementById('reset')
 
 reset.addEventListener('click', (event) => {

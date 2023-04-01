@@ -1,16 +1,153 @@
 @import url('https://fonts.googleapis.com/css2?family=Nokora:wght@300&display=swap');
-@import url('~simpledotcss/simple.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
 
 body {
     font-family: 'Nokora', sans-serif;
-}
-a {
-    text-decoration: none;
-    color: inherit;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, auto);
+    background-image: linear-gradient(95.2deg, rgba(173, 252, 234, 1) 26.8%, rgba(192, 229, 246, 1) 64%);
 }
 
 header {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    text-align: center;
+}
+
+i:hover {
+    cursor: pointer;
+}
+
+.notice {
+    margin: 0 auto;
+}
+
+.centered {
+    width: 50%;
+    margin: 0 auto;
+    grid-column: 2/ span 1;
+    grid-row: 2/ span 1;
+}
+
+.canvas-controls {
+    grid-row: 2/ span 1;
+    grid-column: 3/ span 1;
+}
+
+.wrapper-canvas {
+    margin: 0 auto;
+    grid-column: 3/ span 1;
+    grid-row: 3/ span 1;
+}
+
+.textareas {
+    margin: 0 auto;
+    width: 60%;
+}
+
+.wrapper-btn-copy {
+    display: flex;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 480px) {
+    body {
+        font-size: small;
+        overflow: hidden;
+    }
+
+    button {
+        size: 0.5em;
+    }
+
+    canvas {
+        max-width: 75%;
+    }
+
+    .textareas {
+        width: 100%;
+    }
+
+    .centered {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    body {
+        grid-template-columns: 5% auto auto 5%;
+        grid-template-rows: repeat(4 auto);
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    body {
+        grid-template-columns: auto auto;
+        grid-template-rows: repeat(4 auto);
+    }
+
+    .wrapper-canvas,
+    .canvas-controls {
+        grid-column: 2/ span 1;
+    }
+
+    .centered {
+        grid-column: 1/ span 1;
+        grid-row: 2/ span 1;
+    }
+
+    .textareas {
+        grid-column: 1/ span 1;
+        grid-row: 3/ span 1;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    body {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(6 auto);
+    }
+
+    .block-copy,
+    .block-copy2 {
+        display: flex;
+        justify-content: center;
+    }
+
+    textarea {
+        flex: 1;
+    }
+
+    .textareas {
+        grid-row: 3/ span 1;
+        grid-column: 1/ span 2;
+    }
+
+    .centered {
+        grid-row: 2/ span 1;
+        grid-column: 1/ span 2;
+    }
+
+    .canvas-controls {
+        grid-row: 5/ span 1;
+        grid-column: 1/ span 2;
+        margin: 0 auto;
+    }
+
+    .wrapper-canvas {
+        grid-row: 4/ span 1;
+        grid-column: 1/ span 2;
+    }
+
+    footer {
+        grid-row: 6/ span 1;
+        grid-column: 1/ span 2;
+    }
+
+    header {
+        grid-row: 1;
+    }
 }
