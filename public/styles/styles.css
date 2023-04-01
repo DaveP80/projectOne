@@ -9,12 +9,9 @@ body {
     background-image: linear-gradient(95.2deg, rgba(173, 252, 234, 1) 26.8%, rgba(192, 229, 246, 1) 64%);
 }
 
-header {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
 footer {
     text-align: center;
+    grid-row: 4/ span 1;
 }
 
 i:hover {
@@ -26,10 +23,13 @@ i:hover {
 }
 
 .centered {
-    width: 50%;
-    margin: 0 auto;
     grid-column: 2/ span 1;
     grid-row: 2/ span 1;
+}
+
+.block-copy,
+.block-copy2 {
+    flex: 1;
 }
 
 .canvas-controls {
@@ -37,26 +37,32 @@ i:hover {
     grid-column: 3/ span 1;
 }
 
+textarea {
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .wrapper-canvas {
-    margin: 0 auto;
-    grid-column: 3/ span 1;
+    grid-column: 3/ span 2;
     grid-row: 3/ span 1;
 }
 
 .textareas {
-    margin: 0 auto;
-    width: 60%;
+    grid-row: 3/span 1;
+    grid-column: 2/ span 1;
+    display: block;
 }
 
-.wrapper-btn-copy {
+.wrapper-btn-canvas {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 @media only screen and (max-width: 480px) {
     body {
         font-size: small;
-        overflow: hidden;
     }
 
     button {
@@ -64,22 +70,26 @@ i:hover {
     }
 
     canvas {
-        max-width: 75%;
+        width: 80vw;
+        height: auto;
     }
 
-    .textareas {
-        width: 100%;
+    .wrapper-canvas {
+        display: flex;
+        justify-content: center;
     }
 
-    .centered {
-        width: 100%;
-    }
 }
 
 @media only screen and (max-width: 1300px) {
     body {
         grid-template-columns: 5% auto auto 5%;
         grid-template-rows: repeat(4 auto);
+    }
+
+    canvas {
+        width: 40vw;
+        height: auto;
     }
 }
 
@@ -111,14 +121,14 @@ i:hover {
         grid-template-rows: repeat(6 auto);
     }
 
-    .block-copy,
-    .block-copy2 {
-        display: flex;
-        justify-content: center;
+    header {
+        grid-row: 1/ span 1;
+        grid-column: 1/ span 2;
     }
 
-    textarea {
-        flex: 1;
+    canvas {
+        width: 65vw;
+        height: auto;
     }
 
     .textareas {
@@ -140,6 +150,8 @@ i:hover {
     .wrapper-canvas {
         grid-row: 4/ span 1;
         grid-column: 1/ span 2;
+        display: flex;
+        justify-content: center;
     }
 
     footer {
