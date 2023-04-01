@@ -20,7 +20,6 @@ function emptyStorage() {
         }
     })
 }
-
 //if there are no quotes in local storage
 if (filteredValues.length == 0) {
     emptyStorage()
@@ -29,9 +28,10 @@ if (filteredValues.length == 0) {
 for (let obj of filteredValues) {
     console.log(obj)
     const newItem = document.createElement('div');
+    newItem.display = 'flex'
+    newItem.style = 'flex-direction: column-reverse'
     newItem.id = Object.keys(obj)[0]
     let newp = document.createElement('p')
-    //newp.textContent = obj.replaceAll("\n", ' ');
     newp.textContent = Object.values(obj)[0].replaceAll('\n', ' ')
     let newicon = document.createElement('i')
     newicon.classList.add("fa", "fa-times")
