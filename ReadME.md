@@ -13,6 +13,7 @@ Your own API key can be acquired [here](https://rapidapi.com/peelu/api/quotes-vi
 - Enhanced view page shows all the quotes returned from the API, with custom font options
   and grid view options.
 - Canvas area and text area can be copy and pasted.
+- Blockquote animation on first page load.
 ### Feature Needed
 A user can copy and paste the canvas, but the colors and quality is not consistent.
 - To build the canvas with text and good copy and paste functionality.

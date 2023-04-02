@@ -60,6 +60,16 @@ textarea {
     align-items: center;
 }
 
+blockquote {
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  blockquote.visible {
+    opacity: 1;
+  }
+
 @media only screen and (max-width: 480px) {
     body {
         font-size: small;

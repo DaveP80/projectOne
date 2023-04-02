@@ -84,4 +84,8 @@ i:hover {
     #fonts {
         width: 95%;
     }
+
+    p {
+        font-size: small;
+    }
 }

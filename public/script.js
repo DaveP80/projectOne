@@ -40,6 +40,11 @@ window.onload = function () {
       var quoteContainer = document.querySelector('header');
 
       quoteContainer.appendChild(newDiv);
+
+      setTimeout(() => {
+        let blockquote = document.querySelector('blockquote')
+        blockquote.classList.add('visible');
+      }, 1000);
     }).catch(e => console.log(e))
     // Set the 'visited' flag in localStorage
     localStorage.setItem('visited', 'true');
