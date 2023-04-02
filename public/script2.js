@@ -2,7 +2,7 @@
 const filteredValues = Object.entries(localStorage)
     .filter(([key, value]) => parseInt(key) > 9999)
     .map(([key, value]) => { return { [key]: value } })
-//if local storage is empty
+//if one column is empty
 window.onload = function () {
     const div1 = document.getElementById("1");
     const div2 = document.getElementById("2");
@@ -13,7 +13,15 @@ window.onload = function () {
     }
 }
 let column = 1;
-function emptyStorage() {
+//if local storage is empty
+//if there are no quotes in local storage
+if (filteredValues.length == 0) {
+    emptyStorage()
+}
+
+function emptyStorage(column = 1) {
+    let container = document.querySelector(".grid-container");
+    container.style.gridTemplateColumns = "repeat(3, 1fr)";
     ['make some API Requests!', '📓📙👩‍🎓', '🦮🐱🐩'].forEach(item => {
         const newItem = document.createElement('div');
         let newp = document.createElement('p')
@@ -24,14 +32,7 @@ function emptyStorage() {
         const container = document.getElementById(column.toString())
         container.appendChild(newItem);
         column++;
-        if (column > 3) {
-            column = 1; // Reset to first column if we reach the end of the row
-        }
     })
-}
-//if there are no quotes in local storage
-if (filteredValues.length == 0) {
-    emptyStorage()
 }
 
 for (let obj of filteredValues) {

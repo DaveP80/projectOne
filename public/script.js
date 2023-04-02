@@ -67,8 +67,8 @@ info.addEventListener('click', () => {
   let notice = document.createElement('p')
   notice.classList.add('notice')
   notice.textContent = `This website calls the QuotesVilla Api and the user can select from many categories. Pick
-   a category and font color. Then you can copy and paste and short or long quote and make a canvas with text. The
-    other page is a collection of all the Api requests. The default quote category is wisdom`
+   a category and optional font color. Then you can copy and paste a short or long quote, and copy the canvas image. The
+    other page is a collection of all the Api requests. The default quote category is wisdom.`
   newdiv.appendChild(notice)
   let newicon = document.createElement('i')
   newicon.classList.add("fa", "fa-times")
