@@ -10,6 +10,41 @@ const defaultTWidth = textarea.clientWidth;
 const defaultTHeight = textarea.clientHeight;
 
 localStorage.setItem("key", "04a630e781mshefd694339487a87p171cc9jsn6bd43ac41939");
+//headers
+const options = {
+  method: 'GET',
+  headers: {
+    'X-RapidAPI-Key': localStorage.getItem("key"),
+    'X-RapidAPI-Host': 'quotes-villa.p.rapidapi.com'
+  }
+};
+//append a blockquote when the user first loads the page
+window.onload = function () {
+  var visited = localStorage.getItem('visited');
+  if (!visited) {
+    getQuote(`https://quotes-villa.p.rapidapi.com/quotes/wisdom`, options).then(res => {
+
+      let contentstring = checkString(res)
+      let fquote = ''
+      if (contentstring[0].charAt(contentstring[0].length - 1) === ',') {
+        contentstring[0] = contentstring[0].slice(0, -1);
+        fquote = contentstring[0]
+      } else fquote = contentstring[0]
+
+      var newDiv = document.createElement('div');
+
+      newDiv.className = 'grid-item';
+
+      newDiv.innerHTML = `<blockquote><p>${fquote}</p></blockquote>`;
+
+      var quoteContainer = document.querySelector('header');
+
+      quoteContainer.appendChild(newDiv);
+    }).catch(e => console.log(e))
+    // Set the 'visited' flag in localStorage
+    localStorage.setItem('visited', 'true');
+  }
+};
 
 let textb = document.getElementById('copy-text-btn')
 
@@ -33,16 +68,22 @@ info.addEventListener('click', () => {
   notice.classList.add('notice')
   notice.textContent = `This website calls the QuotesVilla Api and the user can select from many categories. Pick
    a category and font color. Then you can copy and paste and short or long quote and make a canvas with text. The
-    other page is a collection of all the Api requests.`
+    other page is a collection of all the Api requests. The default quote category is wisdom`
   newdiv.appendChild(notice)
   let newicon = document.createElement('i')
   newicon.classList.add("fa", "fa-times")
   newicon.addEventListener('click', () => {
-      let myDiv = document.getElementById(newdiv.id)
-      myDiv.remove()
+    let myDiv = document.getElementById(newdiv.id)
+    myDiv.remove()
   })
   newdiv.appendChild(newicon)
   let adddiv = document.querySelector('header')
+  let allinfo = document.querySelectorAll('#infodiv')
+  if (allinfo) {
+    for (a of allinfo) {
+      a.remove()
+    }
+  }
   adddiv.appendChild(newdiv)
 })
 
@@ -160,7 +201,7 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const category = form.elements.category.value;
-  if (category=='--select a category--') alert('choosing wisdom')
+  if (category == '--select a category--') alert('choosing wisdom')
   var font = form.elements.fonts.value;
   let clearbox = document.getElementById('centertext')
   clearbox.value = ''
@@ -170,14 +211,6 @@ form.addEventListener("submit", (event) => {
   clearbox2.value = ''
   clearbox2.style.fontFamily = font;
   var color = form.elements.colors.value;
-
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': localStorage.getItem("key"),
-      'X-RapidAPI-Host': 'quotes-villa.p.rapidapi.com'
-    }
-  };
 
   getQuote(`https://quotes-villa.p.rapidapi.com/quotes/${category == '--select a category--' ? 'wisdom' : category}`, options, "search")
     .then(data => {
