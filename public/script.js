@@ -243,7 +243,7 @@ form.addEventListener("submit", (event) => {
       changearea.value = newarr[0]
       changearea2.value = newarr[1]
       addString(newarr[0])
-      makeCanvas(color)
+      makeCanvas(color, font)
       //Generate new canvas when textarea is altered.
       changearea.addEventListener("input", () => {
         let checktextarea = document.getElementById('centertext')
@@ -281,7 +281,7 @@ async function copyToClipboard(src) {
   }
 }
 
-function makeCanvas(args) {
+function makeCanvas(args, font) {
 
   // Select the canvas element
   const canvas = document.getElementById('myCanvas');
@@ -293,8 +293,9 @@ function makeCanvas(args) {
 
   const ctx = canvas.getContext('2d');
   // Set the font properties
-  const fontSize = 1.5;
-  ctx.font = `${fontSize}em Arial`;
+  const fontSize = 16;
+  console.log(font);
+  ctx.font = `${fontSize}px ${font}`;
 
   // Set the canvas size to match the text size
   const textWidth = ctx.measureText(pElement.value).width;
