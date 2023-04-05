@@ -327,11 +327,13 @@ function copyTextArea() {
     const canvas = document.querySelector('canvas');
     // Get the canvas context
     const ctx = canvas.getContext('2d');
+
     // Create a new canvas element to copy the contents to
     const newCanvas = document.createElement('canvas');
     newCanvas.width = canvas.width;
     newCanvas.height = canvas.height;
-
+    newCanvas.style.backgroundColor = canvas.style.backgroundColor
+    
     const newCtx = newCanvas.getContext('2d');
 
     newCtx.drawImage(canvas, 0, 0);
