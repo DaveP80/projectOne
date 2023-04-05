@@ -1,7 +1,9 @@
 //make an array of important objects from
 const filteredValues = Object.entries(localStorage)
     .filter(([key, value]) => parseInt(key) > 9999)
-    .map(([key, value]) => { return { [key]: value } })
+    .map(([key, value]) => { return { [key]: value } });
+
+
 //if one column is empty
 window.onload = function () {
     const div1 = document.getElementById("1");

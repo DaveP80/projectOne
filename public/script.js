@@ -210,7 +210,7 @@ form.addEventListener("submit", (event) => {
   var font = form.elements.fonts.value;
   let clearbox = document.getElementById('centertext')
   clearbox.value = ''
-  if (font == '--Font--') font = "'Nokora', sans-serif";
+  if (font == '--Font--') font = `'Nokora', sans-serif`;
   clearbox.style.fontFamily = font;
   let clearbox2 = document.getElementById('centertext2')
   clearbox2.value = ''
@@ -258,7 +258,10 @@ form.addEventListener("submit", (event) => {
         //only alter canvas if there is a quantitative difference in text area
         else if (checktextarea.value.length > textareastorage[counter - 1].length + 8 || checktextarea.value.length <
           textareastorage[counter - 1].length - 8) {
-          makeCanvas()
+          let getcolor = document.getElementById('colors')
+          const selectedOption = getcolor.options[getcolor.selectedIndex];
+          const selectedValue = selectedOption.value;
+          makeCanvas(selectedValue)
         }
       })
     })
@@ -294,8 +297,7 @@ function makeCanvas(args, font) {
   const ctx = canvas.getContext('2d');
   // Set the font properties
   const fontSize = 16;
-  console.log(font);
-  ctx.font = `${fontSize}px ${font}`;
+  ctx.font = `${fontSize}px ${font??'Arial'}`;
 
   // Set the canvas size to match the text size
   const textWidth = ctx.measureText(pElement.value).width;
