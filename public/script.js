@@ -8,22 +8,11 @@ const defaultHeight = canvasdim.height;
 const textarea = document.getElementById('centertext');
 const defaultTWidth = textarea.clientWidth;
 const defaultTHeight = textarea.clientHeight;
-
-localStorage.setItem("key", "04a630e781mshefd694339487a87p171cc9jsn6bd43ac41939");
-//headers
-const options = {
-  method: 'GET',
-  headers: {
-    'X-RapidAPI-Key': localStorage.getItem("key"),
-    'X-RapidAPI-Host': 'quotes-villa.p.rapidapi.com'
-  }
-};
 //append a blockquote when the user first loads the page
 window.onload = function () {
   var visited = localStorage.getItem('visited');
   if (!visited) {
-    getQuote(`https://quotes-villa.p.rapidapi.com/quotes/wisdom`, options).then(res => {
-
+    getQuote('https://us-east4-majestic-cairn-365919.cloudfunctions.net/getquote/wisdom').then(res => {
       let contentstring = checkString(res)
       let fquote = ''
       if (contentstring[0].charAt(contentstring[0].length - 1) === ',') {
@@ -185,7 +174,7 @@ function checkString(args) {
   return [shortest, longest];
 }
 
-async function getQuote(api_url, headers, flag) {
+async function getQuote(api_url, flag) {
   if (flag == "search") {
     const myElement = document.querySelector('.centered');
     const newp = document.createElement('p')
@@ -193,10 +182,9 @@ async function getQuote(api_url, headers, flag) {
     newp.textContent = '...loading'
     if (myElement) myElement.appendChild(newp)
   }
-  const response = await fetch(api_url, headers);
-
-  const data = await response.json();
-  return data;
+  const response = await fetch(api_url)
+  const data = await response.json()
+  return data
 }
 
 const form = document.querySelector('.usersubmit');
@@ -217,7 +205,7 @@ form.addEventListener("submit", (event) => {
   clearbox2.style.fontFamily = font;
   var color = form.elements.colors.value;
 
-  getQuote(`https://quotes-villa.p.rapidapi.com/quotes/${category == '--select a category--' ? 'wisdom' : category}`, options, "search")
+  getQuote(`https://us-east4-majestic-cairn-365919.cloudfunctions.net/getquote/${category == '--select a category--' ? 'wisdom' : category}`, "search")
     .then(data => {
       let deltext = document.getElementById('loadingtext')
       deltext.remove()
