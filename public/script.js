@@ -1,4 +1,5 @@
 let textareastorage = {}
+let options;
 let counter = 0;
 //store client dimensions
 let canvasdim = document.getElementById('myCanvas')
@@ -9,48 +10,43 @@ const textarea = document.getElementById('centertext');
 const defaultTWidth = textarea.clientWidth;
 const defaultTHeight = textarea.clientHeight;
 
-localStorage.setItem("key", "04a630e781mshefd694339487a87p171cc9jsn6bd43ac41939");
-//headers
-const options = {
-  method: 'GET',
-  headers: {
-    'X-RapidAPI-Key': localStorage.getItem("key"),
-    'X-RapidAPI-Host': 'quotes-villa.p.rapidapi.com'
-  }
-};
-//append a blockquote when the user first loads the page
 window.onload = function () {
   var visited = localStorage.getItem('visited');
   if (!visited) {
-    getQuote(`https://quotes-villa.p.rapidapi.com/quotes/wisdom`, options).then(res => {
+    getQuote('https://us-east4-majestic-cairn-365919.cloudfunctions.net/getquote').then(res => {
+      options = res
+      getQuote(`https://quotes-villa.p.rapidapi.com/quotes/wisdom`, options).then(res => {
+        let contentstring = checkString(res)
+        let fquote = ''
+        if (contentstring[0].charAt(contentstring[0].length - 1) === ',') {
+          contentstring[0] = contentstring[0].slice(0, -1);
+          fquote = contentstring[0]
+        } else fquote = contentstring[0]
 
-      let contentstring = checkString(res)
-      let fquote = ''
-      if (contentstring[0].charAt(contentstring[0].length - 1) === ',') {
-        contentstring[0] = contentstring[0].slice(0, -1);
-        fquote = contentstring[0]
-      } else fquote = contentstring[0]
+        var newDiv = document.createElement('div');
 
-      var newDiv = document.createElement('div');
+        newDiv.className = 'grid-item';
 
-      newDiv.className = 'grid-item';
+        newDiv.innerHTML = `<blockquote><p>${fquote}</p></blockquote>`;
 
-      newDiv.innerHTML = `<blockquote><p>${fquote}</p></blockquote>`;
+        var quoteContainer = document.querySelector('header');
 
-      var quoteContainer = document.querySelector('header');
+        quoteContainer.appendChild(newDiv);
 
-      quoteContainer.appendChild(newDiv);
-
-      setTimeout(() => {
-        let blockquote = document.querySelector('blockquote')
-        blockquote.classList.add('visible');
-      }, 1000);
-    }).catch(e => console.log(e))
+        setTimeout(() => {
+          let blockquote = document.querySelector('blockquote')
+          blockquote.classList.add('visible');
+        }, 1000);
+      }).catch(e => console.log(e))
+    })
     // Set the 'visited' flag in localStorage
     localStorage.setItem('visited', 'true');
+  } else if (visited) {
+    getQuote('https://us-east4-majestic-cairn-365919.cloudfunctions.net/getquote').then(res => {
+      options = res
+    })
   }
 };
-
 let textb = document.getElementById('copy-text-btn')
 
 textb.addEventListener('click', () => {
@@ -297,7 +293,7 @@ function makeCanvas(args, font) {
   const ctx = canvas.getContext('2d');
   // Set the font properties
   const fontSize = 16;
-  ctx.font = `${fontSize}px ${font??'Arial'}`;
+  ctx.font = `${fontSize}px ${font ?? 'Arial'}`;
 
   // Set the canvas size to match the text size
   const textWidth = ctx.measureText(pElement.value).width;
