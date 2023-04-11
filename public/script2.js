@@ -37,6 +37,7 @@ function emptyStorage(column = 1) {
     })
 }
 
+function makeGrid(flag) {
 for (let obj of filteredValues) {
     const newItem = document.createElement('div');
     newItem.display = 'flex'
@@ -69,6 +70,9 @@ for (let obj of filteredValues) {
         column = 1; // Reset to first column if we reach the end of the row
     }
 }
+}
+
+makeGrid()
 let form = document.getElementById('fontselect')
 let togglegrid = document.querySelectorAll('.pitem')
 
@@ -91,6 +95,22 @@ document.getElementById("revert").addEventListener("click", function () {
     if (container.style.gridTemplateColumns !== "1fr") container.style.gridTemplateColumns = "1fr";
     else container.style.gridTemplateColumns = 'repeat(3, 1fr)';
 })
+
+let shuffle = document.getElementById('shuffle')
+
+shuffle.addEventListener('click', () => {
+    console.log(filteredValues.length);
+    if (filteredValues.length) {
+        let allitems = document.querySelectorAll('.pitem')
+        const heights = []
+
+        allitems.forEach(item => {
+            heights.push(item.offsetHeight)
+        })
+
+    }
+})
+
 // Get the button:
 let mybutton = document.getElementById("myBtn");
 
