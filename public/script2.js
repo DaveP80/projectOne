@@ -38,48 +38,58 @@ function emptyStorage(column = 1) {
 }
 
 function makeGrid(flag) {
-for (let obj of filteredValues) {
-    const newItem = document.createElement('div');
-    newItem.display = 'flex'
-    newItem.style = 'flex-direction: column-reverse'
-    newItem.id = Object.keys(obj)[0]
-    let newp = document.createElement('p')
-    newp.textContent = Object.values(obj)[0].replaceAll('\n', ' ')
-    let newicon = document.createElement('i')
-    newicon.classList.add("fa", "fa-times")
-    newicon.addEventListener('click', () => {
-        let myDiv = document.getElementById(newItem.id)
-        myDiv.remove()
-        localStorage.removeItem(newItem.id)
-        //build center if all divs are empty
-        const div1 = document.getElementById("1");
-        const div2 = document.getElementById("2");
-        const div3 = document.getElementById("3");
-        if (div1.innerHTML === "" && div2.innerHTML === "" && div3.innerHTML === "") {
-            emptyStorage()
+    const div1 = document.getElementById("1");
+    const div2 = document.getElementById("2");
+    const div3 = document.getElementById("3");
+    if (flag) {
+        div1.innerHTML = ""; div2.innerHTML = ""; div3.innerHTML = "";
+        for (let i = filteredValues.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [filteredValues[i], filteredValues[j]] = [filteredValues[j], filteredValues[i]];
         }
-    })
-    newItem.classList.add('pitem');
-    newItem.style.gridColumn = `${column} / span 1`; // Set the column of the new item
-    newItem.appendChild(newp)
-    newItem.appendChild(newicon)
-    const container = document.getElementById(column.toString())
-    container.appendChild(newItem);
-    column++;
-    if (column > 3) {
-        column = 1; // Reset to first column if we reach the end of the row
     }
-}
+    for (let i = 0; i < filteredValues.length; i++) {
+        if (typeof filteredValues[i] === 'object') {
+            const newItem = document.createElement('div');
+            newItem.display = 'flex'
+            newItem.style = 'flex-direction: column-reverse'
+            newItem.id = Object.keys(filteredValues[i])[0]
+            let newp = document.createElement('p')
+            newp.textContent = Object.values(filteredValues[i])[0].replaceAll('\n', ' ')
+            let newicon = document.createElement('i')
+            newicon.classList.add("fa", "fa-times")
+            newicon.addEventListener('click', () => {
+                let myDiv = document.getElementById(newItem.id)
+                myDiv.remove()
+                localStorage.removeItem(newItem.id)
+                delete filteredValues[i]
+                //build center if all divs are empty
+                if (div1.innerHTML === "" && div2.innerHTML === "" && div3.innerHTML === "") {
+                    emptyStorage()
+                }
+            })
+            newItem.classList.add('pitem');
+            newItem.style.gridColumn = `${column} / span 1`; // Set the column of the new item
+            newItem.appendChild(newp)
+            newItem.appendChild(newicon)
+            const container = document.getElementById(column.toString())
+            container.appendChild(newItem);
+            column++;
+            if (column > 3) {
+                column = 1; // Reset to first column if we reach the end of the row
+            }
+        }
+    }
 }
 
 makeGrid()
 let form = document.getElementById('fontselect')
-let togglegrid = document.querySelectorAll('.pitem')
 
 form.addEventListener('submit', (event) => {
     event.preventDefault()
     var font = form.elements.fonts.value;
     if (font == '--Font--') font = "'Enriqueta', serif";
+    let togglegrid = document.querySelectorAll('.pitem')
     togglegrid.forEach(function (item) {
         // set the font style of the element to a new font
         item.style.fontFamily = font;
@@ -99,7 +109,6 @@ document.getElementById("revert").addEventListener("click", function () {
 let shuffle = document.getElementById('shuffle')
 
 shuffle.addEventListener('click', () => {
-    console.log(filteredValues.length);
     if (filteredValues.length) {
         let allitems = document.querySelectorAll('.pitem')
         const heights = []
@@ -107,7 +116,7 @@ shuffle.addEventListener('click', () => {
         allitems.forEach(item => {
             heights.push(item.offsetHeight)
         })
-
+        makeGrid(true)
     }
 })
 
