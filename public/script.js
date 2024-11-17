@@ -1,5 +1,11 @@
 let textareastorage = {}
-let options;
+const options = {
+	method: 'GET',
+	headers: {
+		'x-rapidapi-key': '04a630e781mshefd694339487a87p171cc9jsn6bd43ac41939',
+		'x-rapidapi-host': 'famous-quotes4.p.rapidapi.com'
+	}
+};
 let counter = 0;
 //store client dimensions
 let canvasdim = document.getElementById('myCanvas')
@@ -13,21 +19,14 @@ const defaultTHeight = textarea.clientHeight;
 window.onload = function () {
   var visited = localStorage.getItem('visited');
   if (!visited) {
-    getQuote('https://us-east4-majestic-cairn-365919.cloudfunctions.net/getquote').then(res => {
-      options = res
-      getQuote(`https://quotes-villa.p.rapidapi.com/quotes/wisdom`, options).then(res => {
-        let contentstring = checkString(res)
-        let fquote = ''
-        if (contentstring[0].charAt(contentstring[0].length - 1) === ',') {
-          contentstring[0] = contentstring[0].slice(0, -1);
-          fquote = contentstring[0]
-        } else fquote = contentstring[0]
+      getQuote(`
+https://famous-quotes4.p.rapidapi.com/random?category=wisdom&count=1`, options).then(res => {
 
         var newDiv = document.createElement('div');
 
         newDiv.className = 'grid-item';
 
-        newDiv.innerHTML = `<blockquote><p>${fquote}</p></blockquote>`;
+        newDiv.innerHTML = `<blockquote><p>${res[0].text + " " + res[0].author}</p></blockquote>`;
 
         var quoteContainer = document.querySelector('header');
 
@@ -38,13 +37,8 @@ window.onload = function () {
           blockquote.classList.add('visible');
         }, 1000);
       }).catch(e => console.log(e))
-    })
     // Set the 'visited' flag in localStorage
     localStorage.setItem('visited', 'true');
-  } else if (visited) {
-    getQuote('https://us-east4-majestic-cairn-365919.cloudfunctions.net/getquote').then(res => {
-      options = res
-    })
   }
 };
 let textb = document.getElementById('copy-text-btn')
@@ -67,7 +61,7 @@ info.addEventListener('click', () => {
   newdiv.id = 'infodiv'
   let notice = document.createElement('p')
   notice.classList.add('notice')
-  notice.textContent = `This website calls the QuotesVilla Api and the user can select from many categories. Pick
+  notice.textContent = `This website calls the Famous Quotes Api and the user can select from many categories. Pick
    a category and optional font color. Then you can copy and paste a short or long quote, and copy the canvas image. The
     other page is a collection of all the Api requests. The default quote category is wisdom.`
   newdiv.appendChild(notice)
@@ -213,31 +207,24 @@ form.addEventListener("submit", (event) => {
   clearbox2.style.fontFamily = font;
   var color = form.elements.colors.value;
 
-  getQuote(`https://quotes-villa.p.rapidapi.com/quotes/${category == '--select a category--' ? 'wisdom' : category}`, options, "search")
+  getQuote(`https://famous-quotes4.p.rapidapi.com/random?category=${category == '--select a category--' ? 'wisdom' : category}&count=1`, options, "search")
     .then(data => {
       let deltext = document.getElementById('loadingtext')
       deltext.remove()
-
-      let contentstring = checkString(data)
-      let newarr = []
+      let contentstring = data[0].text + " " + data[0].author;
+      let newarr = [contentstring]
       //remove extra char at end of previous function
-      for (let s of contentstring) {
-        if (s.charAt(s.length - 1) === ',') {
-          s = s.slice(0, -1);
-          newarr.push(s)
-        } else newarr.push(s)
-      }
       let changearea = document.getElementById('centertext')
       let changearea2 = document.getElementById('centertext2')
       //fill in the two text areas with shortest and longest result strings
-      if (!newarr[0].includes("You are not subscribed to this API.")) {
+      if (!newarr[0]?.includes("You are not subscribed to this API.")) {
         newarr.forEach(item => {
           localStorage.setItem(Math.floor(10000 + Math.random() * 90000).toString(), item)
         })
 
       } else return;
       changearea.value = newarr[0]
-      changearea2.value = newarr[1]
+      changearea2.value = newarr[0]
       addString(newarr[0])
       makeCanvas(color, font)
       //Generate new canvas when textarea is altered.
